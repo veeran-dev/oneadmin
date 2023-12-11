@@ -14,9 +14,13 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@component/*": ["./src/components/*"],
+      "@context/*":["./src/context/*"],
+      "@api/*":["./src/pages/api/mutation/*"],
+      "@hooks/*":["./src/hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/styles/assets/gl.tsx"],
   "exclude": ["node_modules"]
 }
