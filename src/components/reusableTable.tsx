@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { Key } from "react";
 
@@ -5,11 +6,13 @@ interface TableProps {
   headers: { label: string; key: string }[];
   rows: { [key: string]: string | number }[];
   buttons?: { label: string; link: string }[];
+  actions?: { label: string; link: string }[];
+  onButtonClick?: (label:string, id:string)=>void;
 }
 
-const ReusableTable: React.FC<TableProps> = ({ headers, rows, buttons }) => {
+const ReusableTable: React.FC<TableProps> = ({ headers, rows, buttons, actions, onButtonClick }) => {
   return (
-    <div className="mt-8 flow-root">
+    <div className="mt-4 flow-root">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
@@ -33,6 +36,14 @@ const ReusableTable: React.FC<TableProps> = ({ headers, rows, buttons }) => {
                       <span className="sr-only">Actions</span>
                     </th>
                   )}
+                  {actions && actions.length > 0 && (
+                    <th
+                      scope="col"
+                      className="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                    >
+                      <span className="sr-only">Actions</span>
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
@@ -49,13 +60,26 @@ const ReusableTable: React.FC<TableProps> = ({ headers, rows, buttons }) => {
                     {buttons && buttons.length > 0 && (
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         {buttons.map((button, index) => (
-                          <a
+                          <Link
                             key={index}
                             href={`${button.link}${row._id}`}
-                            className="text-indigo-600 hover:text-indigo-900"
+                            className="text-indigo-600 hover:text-indigo-900 pr-4"
                           >
                             {button.label}
-                          </a>
+                          </Link>
+                        ))}
+                      </td>
+                    )}
+                    {actions && actions.length > 0 && (
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        {actions.map((action, index) => (
+                          <button
+                            key={index}
+                            className="text-indigo-600 hover:text-indigo-900 pr-4"
+                            onClick={() => onButtonClick && onButtonClick(action.label, String(row._id))}
+                          >
+                            {action.label}
+                          </button>
                         ))}
                       </td>
                     )}

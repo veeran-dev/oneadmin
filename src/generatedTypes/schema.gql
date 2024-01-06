@@ -1,0 +1,331 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Course {
+  _id: String!
+  instituteId: String!
+  category: String!
+  name: String!
+  images: [String!]!
+  description: String!
+  duration: String!
+  features: [Feature!]!
+}
+
+type Feature {
+  title: String!
+  detail: String!
+}
+
+type Institute {
+  _id: String!
+  name: String!
+  about: String!
+  streetAddress: String!
+  city: String!
+  pincode: String!
+  state: String!
+  country: String!
+  pocName: String!
+  pocMobile: String!
+}
+
+type Student {
+  _id: String!
+  instituteId: String!
+  firstName: String!
+  lastName: String!
+  fatherName: String!
+  motherName: String!
+  school: String!
+  DOB: String!
+  contact1: String!
+  contact2: String
+  addressLine1: String!
+  addressLine2: String
+  city: String!
+  state: String!
+  pincode: String!
+  country: String!
+}
+
+type Batch {
+  _id: String!
+  instituteId: String!
+  courseId: String!
+  branchId: String!
+  name: String!
+  staffIds: [String!]!
+  description: String!
+  type: String!
+  startTime: String!
+  endTime: String!
+  days: [String!]!
+}
+
+type Branch {
+  _id: String!
+  instituteId: String!
+  name: String!
+  mainBranch: Boolean!
+  pocName: String!
+  pocMobile: String!
+  streetAddress: String!
+  city: String!
+  pincode: String!
+  state: String!
+  country: String!
+}
+
+type User {
+  _id: String!
+  name: String!
+  email: String!
+  mobile: String!
+  instituteId: String!
+  role: String!
+}
+
+type VoidResponse {
+  success: Boolean!
+  message: String!
+}
+
+type Attendance {
+  _id: String!
+  instituteId: String!
+  branchId: String!
+  batchId: String!
+  studentId: String!
+  status: String!
+  dateTime: String!
+}
+
+type Invitation {
+  _id: String!
+  email: String!
+  senderUserId: String!
+  instituteId: String!
+  referralCode: String!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getCourseByInstituteId(query: getInstituteID!): [Course!]!
+  getCourseById(query: getCourseID!): Course!
+  getInstitute(instituteId: String!): Institute!
+  getBatchByID(query: BatchId!): Batch!
+  getBatchesByInstituteAndBatchName(query: GetBatchByID!): [Batch!]!
+  getBatchesByBranchAndBatchName(query: GetBatchByBranchID!): [Batch!]!
+  getBatchesByCourseId(query: GetBatchByCourseID!): [Batch!]!
+  getStaffsByCourseId(query: GetBatchByCourseID!): [Batch!]!
+  getBranchesByInstituteId(query: getBranchesByInstituteId!): [Branch!]!
+  getBranchesById(query: getBranchesById!): Branch!
+  getUser(id: String!): User!
+  getUsersWithFilters(data: UserFiltersInput!): [User!]!
+  getUserById(id: String!): User!
+  getUserByEmail: User!
+  getStudentsByBranchId(data: StudentsByBranch!): [Student!]!
+  getStudentsById(data: StudentsByID!): Student!
+  getStudentsByBatch(data: StudentsByBatch!): Student!
+  getAttendance(instituteId: String!, batchId: String!, date: String!): [Attendance!]!
+  getInvitationById(query: getInstituteId!): [Invitation!]!
+}
+
+input getInstituteID {
+  instituteId: String!
+  name: String!
+}
+
+input getCourseID {
+  courseId: String!
+}
+
+input BatchId {
+  batchId: String!
+}
+
+input GetBatchByID {
+  instituteId: String!
+  name: String!
+}
+
+input GetBatchByBranchID {
+  branchId: String!
+  name: String!
+}
+
+input GetBatchByCourseID {
+  courseId: String!
+  name: String!
+}
+
+input getBranchesByInstituteId {
+  instituteId: String!
+}
+
+input getBranchesById {
+  branchId: String!
+}
+
+input UserFiltersInput {
+  instituteId: String!
+  staffName: String
+  batchName: String
+}
+
+input StudentsByBranch {
+  branchId: String!
+  name: String!
+  batchName: String!
+}
+
+input StudentsByID {
+  studentId: String!
+}
+
+input StudentsByBatch {
+  batchId: String!
+  name: String!
+  batchName: String!
+}
+
+input getInstituteId {
+  instituteId: String!
+}
+
+type Mutation {
+  createCourse(input: CourseInput!, images: [Upload!]!): Course!
+  editCourse(courseId: String!, courseData: CourseInput!, images: [Upload!]!): Course!
+  createInstitute(instituteData: InstituteInput!): Institute!
+  editInstitute(instituteId: String!, instituteData: InstituteInput!): Institute!
+  createBatch(batchData: BatchInput!): Batch!
+  editBatch(batchId: String!, batchData: BatchInput!): Batch!
+  createBranch(branchData: BranchInput!): Branch!
+  editBranch(branchId: String!, branchData: BranchInput!): Branch!
+  createUser(createUser: CreateUserInputType!): User!
+  createStaff(createStaff: CreateStaffInputType!): User!
+  editUser(id: String!, userData: EditUserInputType!): User!
+  createStudent(studentData: StudentInput!): Student!
+  editStudent(studentId: String!, studentData: StudentInput!): Student!
+  addStudentToBatch(data: AddBatch!): VoidResponse!
+  removeStudentFromBatch(data: AddBatch!): VoidResponse!
+  markAttendance(attendanceData: AttendanceInput!): Attendance!
+  editAttendance(attendanceId: String!, attendanceData: AttendanceInput!): Attendance!
+  sendInvite(email: String!, senderUserId: String!, instituteId: String!): VoidResponse!
+}
+
+input CourseInput {
+  instituteId: String!
+  category: String!
+  images: [String!]!
+  name: String!
+  description: String!
+  duration: String!
+  features: [FeatureInput!]
+}
+
+input FeatureInput {
+  title: String!
+  detail: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input InstituteInput {
+  name: String!
+  about: String!
+  streetAddress: String!
+  city: String!
+  pincode: String!
+  state: String!
+  country: String!
+  pocName: String!
+  pocMobile: String!
+}
+
+input BatchInput {
+  instituteId: String!
+  courseId: String!
+  branchId: String!
+  name: String!
+  staffIds: [String!]!
+  description: String!
+  type: String!
+  startTime: String!
+  endTime: String!
+  days: [String!]!
+}
+
+input BranchInput {
+  instituteId: String!
+  name: String!
+  pocName: String!
+  pocMobile: String!
+  streetAddress: String!
+  city: String!
+  pincode: String!
+  state: String!
+  country: String!
+}
+
+input CreateUserInputType {
+  name: String!
+  email: String!
+  mobile: String!
+  instituteId: String!
+  role: String!
+}
+
+input CreateStaffInputType {
+  name: String!
+  email: String!
+  instituteId: String!
+  role: String!
+}
+
+input EditUserInputType {
+  name: String!
+  email: String!
+  mobile: String!
+  role: String!
+}
+
+input StudentInput {
+  instituteId: String!
+  firstName: String!
+  lastName: String!
+  fatherName: String!
+  motherName: String!
+  school: String!
+  dateOfBirth: DateTime!
+  contact1: String!
+  contact2: String
+  addressLine1: String!
+  addressLine2: String
+  city: String!
+  state: String!
+  pincode: String!
+  country: String!
+}
+
+input AddBatch {
+  studentId: String!
+  batchId: String!
+}
+
+input AttendanceInput {
+  instituteId: String!
+  branchId: String!
+  batchId: String!
+  studentId: String!
+  status: String!
+  dateTime: String!
+}

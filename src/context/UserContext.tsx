@@ -1,8 +1,12 @@
-import React, { createContext, useContext, useReducer, ReactNode, useState } from 'react';
+import { GET_USER_BY_EMAIL } from '@/pages/api/mutation/user';
+import { setUserData } from '@/utils/userStorage';
+import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
+import React, { createContext, useContext, useReducer, ReactNode, useState, useEffect, useMemo } from 'react';
 
 // Define the types
 type User = {
-    id:string;
+    _id:string;
     name: string;
     email: string;
     instituteId: string;
@@ -15,7 +19,7 @@ type UserContextType = {
 };
 
 const defaultUser ={
-    id: "",
+    _id: "",
     name: "",
     email:"",
     instituteId:"",
@@ -26,6 +30,29 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser)
+  const { loading, error, data } = useQuery(GET_USER_BY_EMAIL);
+  const router = useRouter()
+  
+  useEffect(()=>{
+    if(data && data.getUserByEmail){
+      setUserData(data['getUserByEmail'])
+      setUser(data['getUserByEmail'])
+    }
+  },[data])
+
+  useEffect(()=>{
+    const invalidUser = 'User is not available';
+    if (error?.message === invalidUser) {
+      router.push('/settings/new?force=true');
+    } else if (error) {
+      if(!router.query?.referalCode){
+        router.push('/auth/login');
+      }
+    }
+      
+  },[error])
+
+
 
   const updateUser = (user: User) => {
     setUser(user)

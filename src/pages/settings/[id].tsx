@@ -27,7 +27,7 @@ export default function Settings() {
             setSuccess(true)
             setSuccessMessage("Your account updated successfully")
             setTimeout(()=>{
-            route.push('/settings')
+            router.push('/settings')
             },2000)
         },
         onError: (error) => {
@@ -66,8 +66,8 @@ export default function Settings() {
     const [success, setSuccess] = useState<boolean>(false)
     const [successMessage, setSuccessMessage] = useState<string>("")
 
-    const route = useRouter()
-    const { id, force } = route.query;
+    const router = useRouter()
+    const { id, force } = router.query;
 
 
     const configs ={
@@ -119,7 +119,7 @@ export default function Settings() {
 
     }
 
-    const handleError = (errors) => {
+    const handleError = (errors:any) => {
         console.log(errors)
     };
 
@@ -131,9 +131,9 @@ export default function Settings() {
         } catch (error) {
           console.error('Error refetching students data:', error);
           const user = decodeToken()
-          const userData ={
-            name: user.name,
-            email:user.email,
+          const userData:any ={
+            name: user?.name,
+            email:user?.email,
             instituteId:instituteId,
             role:"admin",
             mobile:mobile,
@@ -146,7 +146,7 @@ export default function Settings() {
                 setSuccess(true)
                 setSuccessMessage("Your account created successfully, you will redirected to dashboard")
                 setTimeout(()=>{
-                    route.push('/dashboard')
+                    router.push('/dashboard')
                 },2000)
             }
   
@@ -239,7 +239,7 @@ export default function Settings() {
                         />
                         </div>
                         <small className="text-red-700">
-                            {errors?.name && errors.name.message}
+                            {errors?.name && <>{errors.name.message}</>}
                         </small>
                     </div>
                     </div>
@@ -258,7 +258,7 @@ export default function Settings() {
                         />
                     </div>
                     <small className="text-red-700">
-                        {errors?.about && errors.about.message}
+                        {errors?.about && <>{errors.about.message}</>}
                     </small>
                     </div>
 
@@ -308,7 +308,7 @@ export default function Settings() {
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                         <label htmlFor="pocName" className="block text-sm font-medium leading-6 text-gray-900">
-                            Point of Contact's Name<span className='text-red-600'>*</span>
+                            {"Point of Contact's Name"}<span className='text-red-600'>*</span>
                         </label>
                         <div className="mt-2">
                             <input
@@ -320,13 +320,13 @@ export default function Settings() {
                             />
                         </div>
                         <small className="text-red-700">
-                            {errors?.pocName && errors.pocName.message}
+                            {errors?.pocName && <>{errors.pocName.message}</>}
                         </small>
                     </div>
 
                     <div className="sm:col-span-4">
                         <label htmlFor="pocMobile" className="block text-sm font-medium leading-6 text-gray-900">
-                            Point of Contact's Number<span className='text-red-600'>*</span>
+                            {"Point of Contact's Number"}<span className='text-red-600'>*</span>
                         </label>
                         <div className="mt-2">
                             <input
@@ -338,13 +338,13 @@ export default function Settings() {
                             />
                         </div>
                         <small className="text-red-700">
-                            {errors?.pocMobile && errors.pocMobile.message}
+                            {errors?.pocMobile && <>{errors.pocMobile.message}</>}
                         </small>
                     </div>
 
                     <div className="col-span-full">
                         <label htmlFor="streetAddress" className="block text-sm font-medium leading-6 text-gray-900">
-                            Institute's Address (Main Branch) <span className='text-red-600'>*</span>
+                            {"Institute's Address (Main Branch)"} <span className='text-red-600'>*</span>
                         </label>
                         <div className="mt-2">
                             <input
@@ -355,7 +355,7 @@ export default function Settings() {
                             {...register('streetAddress', registerOptions.streetAddress) }
                             />
                             <small className="text-red-700">
-                                {errors?.streetAddress && errors.streetAddress.message}
+                                {errors?.streetAddress && <>{errors.streetAddress.message}</>}
                             </small>
                         </div>
                     </div>
@@ -367,14 +367,13 @@ export default function Settings() {
                         <div className="mt-2">
                             <input
                             type="text"
-                            name="city"
                             id="city"
                             autoComplete="address-level2"
                             className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             {...register('city', registerOptions.city) }
                             />
                             <small className="text-red-700">
-                                {errors?.city && errors.city.message}
+                                {errors?.city && <>{errors.city.message}</>}
                             </small>
                         </div>
                     </div>
@@ -386,14 +385,13 @@ export default function Settings() {
                         <div className="mt-2">
                             <input
                             type="text"
-                            name="state"
                             id="state"
                             autoComplete="address-level1"
                             className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             {...register('state', registerOptions.state) }
                             />
                             <small className="text-red-700">
-                                {errors?.state && errors.state.message}
+                                {errors?.state && <>{errors.state.message}</>}
                             </small>
                         </div>
                     </div>
@@ -412,7 +410,7 @@ export default function Settings() {
                             />
                         </div>
                         <small className="text-red-700">
-                            {errors?.pincode && errors.pincode.message}
+                            {errors?.pincode && <>{errors.pincode.message}</>}
                         </small>
                     </div>
 
@@ -423,7 +421,6 @@ export default function Settings() {
                         <div className="mt-2">
                             <select
                             id="country"
-                            name="country"
                             autoComplete="country-name"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                             {...register('country', registerOptions.country) }
@@ -439,7 +436,7 @@ export default function Settings() {
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+                <button type="button" className="text-sm font-semibold leading-6 text-gray-900" onClick={()=>router.back()}>
                 Cancel
                 </button>
                 <button

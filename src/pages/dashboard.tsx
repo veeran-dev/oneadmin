@@ -2,7 +2,9 @@ import { useEffect } from "react"
 import { useRouter } from "next/router";
 import Stats from '@component/dashboard/stats'
 import Guide from "@/components/dashboard/guide";
-import Header from "@/components/common/header";
+import Header, { HeaderProps } from "@/components/common/header";
+import BatchAnalytics from "@/components/batch/batchAnalytics";
+import RecentTransaction from "@/components/dashboard/recentTransactions";
 
 export default function dashboard(props:any) {
 
@@ -12,18 +14,28 @@ export default function dashboard(props:any) {
     { name: 'Number of servers', value: '3' }
   ]
 
-  const config ={
-    options: true
+
+  const headerProps:HeaderProps={
+    title:"Dashboard",
+    config:{
+    }
   }
   
   
     return (
       <>
         <div className="px-8 py-4">
-        <Header title={"Dashboard"} config={config}/>
+        <Header {...headerProps}/>
         <div className="flex">
           <div className="flex-grow">
-            <Stats stats={stats} />
+            {/* <Stats stats={stats} /> */}
+            <div className="mr-8">
+              <BatchAnalytics/>
+            </div>
+            <div className="mr-8">
+                <RecentTransaction/>
+            </div>
+            
           </div>
           <div className="flex-shrink">
             <Guide />

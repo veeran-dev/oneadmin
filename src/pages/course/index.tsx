@@ -10,6 +10,7 @@ export default function Course(){
     console.log("courses...",courses)
     const configs ={
         options: false,
+        tabs: true,
         link:{
           href: "/course/new",
           title: "Add Course"

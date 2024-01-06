@@ -9,6 +9,7 @@ export default function Branch(){
 
     const configs ={
         options: false,
+        tabs: true,
         link:{
           href: "/branch/new",
           title: "Add Branch"

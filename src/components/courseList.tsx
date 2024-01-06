@@ -1,7 +1,7 @@
 import React from "react";
 import ReusableTable from "@component/reusableTable"; // Adjust the path as needed
 
-const BranchList = ({ courses }: any) => {
+const CourseList = ({ courses }: any) => {
   const headers = [
     { label: "Course Name", key: "name" },
     { label: "Category", key: "category" },
@@ -16,4 +16,4 @@ const BranchList = ({ courses }: any) => {
   return <ReusableTable headers={headers} rows={courses} buttons={buttonsConfig} />;
 };
 
-export default BranchList;
+export default CourseList;

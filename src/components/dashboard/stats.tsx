@@ -1,12 +1,12 @@
 const Stats=({stats}:any)=>{
 
-    function classNames(...classes) {
+    function classNames(...classes: any[]) {
         return classes.filter(Boolean).join(' ')
     }
 
     return(
         <div className="mb-12 grid gap-y-6 gap-x-6 grid-cols-3 pr-4">
-        {stats.map((stat, statIdx) => (
+        {stats.map((stat:{name:string, value:string, unit:string}) => (
           <div
             key={stat.name}
             className={classNames('p-4 bg-clip-border rounded-xl bg-white text-gray-900 border border-blue-gray-100 shadow-sm'

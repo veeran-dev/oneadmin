@@ -1,32 +1,64 @@
 // graphqlHooks.js
-import { useQuery } from '@apollo/client';
-import { GET_USER_BY_EMAIL } from '../pages/api/mutation/user';
-import { useUser } from '@context/UserContext';
-import { useRouter } from 'next/router';
+import { useMutation, useQuery } from '@apollo/client';
+import { ADD_USER, GET_USERS_WITH_FILTERS } from '../pages/api/mutation/user';
+import { getUserData } from '@/utils/userStorage';
 
-const useUserData = () => {
-  const { updateUser } = useUser();
-  const router = useRouter();
-  const invalidUser = 'User is not available';
 
-  const { loading, error, data } = useQuery(GET_USER_BY_EMAIL, {
-    onCompleted: (data) => {
-      console.log("get user data is ...", data);
-      if (data && data.getUserByEmail) {
-        updateUser(data.getUserByEmail);
-      }
-    },
-    onError: (error) => {
-      console.log("get user error is ...", error);
-      if (error?.message === invalidUser) {
-        router.push('/settings/new?force=true');
-      } else if (error) {
-        router.push('/auth/login');
-      }
-    }
-  });
 
-  return { loading, error, data };
+const useUsers = () => {
+  // const instituteId = useUser()?.user?.instituteId;
+  const user:any = getUserData()
+  const { loading, error, data } = useQuery(GET_USERS_WITH_FILTERS,
+     { variables: {
+          data:{
+            instituteId: user?.instituteId,
+            staffName:"",
+            batchName:""
+          }
+     } 
+    });
+
+  if (error) {
+    console.error('Error fetching users:', error);
+  }
+
+  return {
+    loading,
+    error,
+    users: data ? data.getUsersWithFilters : null,
+  };
 };
 
-export { useUserData };
+
+const useAddUser =() =>{
+
+  const [CreateStaff,{ loading, error, data }] = useMutation(ADD_USER);
+
+  const createStaffs = async (
+    createStaff: any,
+    onComplete?: (data:any) => void,
+    onError?: (error:any) => void
+  ) => {
+    try {
+        const response = await CreateStaff({
+            variables: { createStaff },
+        });
+
+        if (onComplete && response.data) {
+            onComplete(response.data.createUser);
+        }
+
+
+    } catch (error:any) {
+      console.log("error is addUser ......",error)
+      if (onError) {
+        onError(error);
+      }
+    }
+  };
+
+  return { createStaffs, loading, error, data };
+
+}
+
+export { useAddUser, useUsers };

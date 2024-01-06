@@ -30,7 +30,7 @@ const useCreateCourse = () => {
 
   const createCourse = async (
     input: CourseInput,
-    images: any[],
+    images: any,
     onComplete?: (data: CourseType) => void,
     onError?: (error: Error) => void
   ) => {
@@ -38,7 +38,6 @@ const useCreateCourse = () => {
         input['instituteId'] = user?.instituteId || ""
         const fileListArray = Array.from(images);
 
-        console.log("fileListArray...",fileListArray)
         const response = await createCourseMutation({
             variables: { input, images:fileListArray },
         });
@@ -67,16 +66,14 @@ const useEditCourse = () => {
 
   const editCourse = async (
     courseData: CourseInput,
-    images: any[],
+    images: any,
     onComplete?: (data: CourseType) => void,
     onError?: (error: Error) => void
   ) => {
     
     try {
-        console.log("courseData..",courseData)
         courseData['instituteId'] = user?.instituteId || ""
         const fileListArray = Array.from(images);
-        console.log("fileListArray...",fileListArray)
         const response = await editCourseMutation({
             variables: { courseId:id, courseData, images:fileListArray },
         });
@@ -87,7 +84,7 @@ const useEditCourse = () => {
 
 
     } catch (error:any) {
-      console.log("error is ......",error)
+      console.log("error is course ......",error)
       if (onError) {
         onError(error);
       }

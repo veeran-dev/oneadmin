@@ -14,9 +14,25 @@ export const GET_USER_BY_EMAIL = gql`
 
 
 export const ADD_USER = gql`
-  mutation CreateUser($createUser: CreateUserInputType!){
-    createUser(createUser: $createUser){
+  mutation CreateStaff($createStaff: CreateStaffInputType!){
+    createStaff(createStaff: $createStaff){
         _id
+        name
+        email
+        instituteId
     }
   }
 `
+
+
+export const GET_USERS_WITH_FILTERS = gql`
+  query GetUsersWithFilters($data: UserFiltersInput!) {
+    getUsersWithFilters(data: $data) {
+      _id
+      name
+      email
+      instituteId
+      role
+    }
+  }
+`;

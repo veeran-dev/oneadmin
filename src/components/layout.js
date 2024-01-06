@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, Suspense, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -11,23 +11,23 @@ import {
   HomeIcon,
   UsersIcon,
   XMarkIcon,
-  ArrowLeftOnRectangleIcon
+  ArrowLeftOnRectangleIcon,
+  CurrencyRupeeIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { googleLogout } from '@react-oauth/google'
 import { getToken, removeToken } from '@/utils/TokenStorage'
-import {useUserData} from "@hooks/getUserHook"
+import { useUser} from '@context/UserContext'
 import Link from 'next/link'
+import { Cog8ToothIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Branch', href: '/branch', icon: DocumentDuplicateIcon, current: false },
   { name: 'Attendance', href: '/attendance', icon: UsersIcon, current: false },
-  { name: 'Course', href: '/course', icon: FolderIcon, current: false },
-  { name: 'Students', href: '/student', icon: CalendarIcon, current: false },
-  { name: 'Staffs', href: '/staff', icon: DocumentDuplicateIcon, current: false },
-  // { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
+  { name: 'Students', href: '/students', icon: CalendarIcon, current: false },
+  { name: 'Payment', href: '/payments', icon: CurrencyRupeeIcon, current: false },
+  {name: 'Settings', href:'/settings', icon: Cog8ToothIcon, current: false }
 ]
 
 const userNavigation = [
@@ -43,13 +43,11 @@ export default function Layout({children}) {
   const router = useRouter()
   const routesWithoutLayout = ['auth/login', 'auth/signup'];
   const isRouteWithoutLayout = routesWithoutLayout.includes(router.pathname.replace(/^\//, ''));
-  console.log("route...",router.pathname.replace(/^\//, ''))
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { loading, error, data } = useUserData();
+  const { user } = useUser();
 
   useEffect(()=>{
-    console.log("useEffect...........",getToken())
     if(getToken() === "" || getToken()===undefined){
       router.push("/auth/login")
     }
@@ -62,7 +60,6 @@ export default function Layout({children}) {
 
 
   const logout=(name)=>{
-    console.log("logout###############",name)
     if(name === 'Sign out'){
       return
     }
@@ -70,9 +67,11 @@ export default function Layout({children}) {
     removeToken()
     router.push("/auth/login")
   }
+  
 
   return (
     <>
+    {/* {loading && <div className='text-[120px]'>loading....</div>} */}
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
@@ -132,7 +131,7 @@ export default function Layout({children}) {
                           <ul role="list" className="-mx-2 space-y-1">
                             {navigation.map((item) => (
                               <li key={item.name}>
-                                <a
+                                <Link
                                   href={item.href}
                                   className={classNames(
                                     item.current
@@ -143,7 +142,7 @@ export default function Layout({children}) {
                                 >
                                   <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                                   {item.name}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -176,7 +175,7 @@ export default function Layout({children}) {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
+                        <Link
                           href={item.href}
                           className={classNames(
                             item.current
@@ -187,13 +186,13 @@ export default function Layout({children}) {
                         >
                           <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
                 </li>
                 <li className="mt-auto">
-                  <a
+                  <Link
                     onClick={()=>logout()}
                     href="/auth/login"
                     className="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -201,7 +200,7 @@ export default function Layout({children}) {
                   >
                     <ArrowLeftOnRectangleIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
                     Sign Out
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -245,7 +244,7 @@ export default function Layout({children}) {
                 <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" />
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative">
+                {/* <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
                     <img
@@ -287,13 +286,15 @@ export default function Layout({children}) {
                       ))}
                     </Menu.Items>
                   </Transition>
-                </Menu>
+                </Menu> */}
               </div>
             </div>
           </div>
 
           <main className="bg-[#f3f3f3] relative h-full min-h-screen">
-            {children}
+            <Suspense fallback={"loading........"}>
+              {children}
+            </Suspense>
           </main>
         </div>
       </div>

@@ -1,13 +1,27 @@
 import Image from 'next/image';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
-import { setToken } from '../../utils/TokenStorage';
+import { decodeToken, setToken } from '../../utils/TokenStorage';
 import { useRouter } from 'next/router';
+import { useAddUser } from '@/hooks/getUserHook';
+import Link from 'next/link';
 
 export default function Login() {
     const router = useRouter();
+    const { createStaffs, loading, error, data } = useAddUser();
 
-    const responseMessage =(e:CredentialResponse)=>{
+    const responseMessage =async (e:CredentialResponse)=>{
       setToken(e.credential);
+      if(router.query.referalCode && router.query.id){
+        const userData:any = decodeToken()
+        const user ={
+          "name": userData.name,
+          "email": userData.email,
+          "instituteId": router.query.id,
+          "role": "staff"
+        }
+        await createStaffs(user)
+      }
+
       router.push('/dashboard');
     }
 
@@ -41,9 +55,9 @@ export default function Login() {
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-gray-500">
                   Not a member?{' '}
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <Link href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                     Start a 30 day free trial
-                  </a>
+                  </Link>
                 </p>
               </div>
   

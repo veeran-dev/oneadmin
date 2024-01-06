@@ -30,3 +30,28 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.react-datepicker-wrapper{
+  background-color: #fff;
+  border: 1px solid rgb(209 213 219) !important;
+  border-radius: 8px;
+  padding: 6px 8px !important;
+  height: 36px !important;
+}
+
+.react-datepicker__input-container input{
+  border: transparent;
+  box-shadow: none;
+  outline: none;
+}
+
+
+fadeOut {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.clickable {
+  cursor: pointer;
+}

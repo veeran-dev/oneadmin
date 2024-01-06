@@ -13,8 +13,18 @@ export default function Settings() {
   console.log("user is ....",user)
   console.log("instituteData....",instituteData?.getInstitute)
 
+  const tabsData = [
+    { name: 'Settings', href: '/settings', current: false },
+    { name: 'Batch', href: '/batch', current: false },
+    { name: 'Branch', href: '/branch', current: true },
+    { name: 'Course', href: '/course', current: false },
+    { name: 'Staffs', href: '/staff', current: false },
+]
+
   const configs ={
       options: false,
+      tabs: true,
+      tabsData:tabsData,
       link:{
         href: "/settings/"+user?.instituteId,
         title: "Edit Settings"
@@ -88,11 +98,11 @@ export default function Settings() {
       <div className="mt-6 border-t border-gray-100">
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Point of Contact's Name</dt>
+            <dt className="text-sm font-medium leading-6 text-gray-900">{"Point of Contact's Name"}</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{instituteData?.getInstitute.pocName}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Point of Contact's Number</dt>
+            <dt className="text-sm font-medium leading-6 text-gray-900">{"Point of Contact's Number"}</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{instituteData?.getInstitute.pocMobile}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

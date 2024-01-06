@@ -86,16 +86,15 @@ export default function Course() {
         const { id } = router.query
         try {
 
-            let featureData = formData.features.map(feature => {
+            let featureData = formData.features.map((feature: { [x: string]: any; __typename: any; }) => {
                 // Create a new object without __typename
                 const { __typename, ...featureWithoutTypename } = feature;
                 return featureWithoutTypename;
             });
             
             
-            const fileInput = document.getElementById('file-upload');
-            // const files: File[] = Array.from(fileInput.files);
-            console.log("fileInput..........",fileInput)
+            const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+            const selectedFiles = fileInput?.files;
             const input = {
               instituteId: "",
               category: formData.category,
@@ -108,10 +107,8 @@ export default function Course() {
             if(id && id !== "new"){
                 await editCourse(
                     input,
-                    fileInput.files,
+                    selectedFiles,
                     (data) => {
-                      // Handle successful course creation
-                      console.log("Course edited successfully:", data);
                       setSuccessMessage("Course edited successfully");
                       setTimeout(()=>{
                           router.push("/course")
@@ -119,8 +116,6 @@ export default function Course() {
                       
                     },
                     (error) => {
-                      // Handle error during course creation
-                      console.error("Error editing course:", error);
                       toast.error("Error editing course");
                       setTimeout(()=>{
                           router.push("/course")
@@ -133,8 +128,6 @@ export default function Course() {
                     input,
                     fileInput.files,
                     (data) => {
-                      // Handle successful course creation
-                      console.log("Course created successfully:", data);
                       setSuccessMessage("Course created successfully");
                       setTimeout(()=>{
                           router.push("/course")
@@ -142,8 +135,6 @@ export default function Course() {
                       
                     },
                     (error) => {
-                      // Handle error during course creation
-                      console.error("Error creating course:", error);
                       toast.error("Error creating course");
                       setTimeout(()=>{
                           router.push("/course")
@@ -235,20 +226,20 @@ export default function Course() {
                         </div>
 
                         <div className="col-span-full">
-                        <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">
-                            About Course <span className='text-red-600'>*</span>
-                        </label>
-                        <div className="mt-2">
-                            <textarea
-                            id="description"
-                            rows={3}
-                            className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            {...register('description', validateOptions(0).description) }
-                            />
-                        </div>
-                        <small className="text-red-700">
-                            {errors?.description && errors.description.message}
-                        </small>
+                            <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">
+                                About Course <span className='text-red-600'>*</span>
+                            </label>
+                            <div className="mt-2">
+                                <textarea
+                                id="description"
+                                rows={3}
+                                className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                {...register('description', validateOptions(0).description) }
+                                />
+                            </div>
+                            <small className="text-red-700">
+                                {errors?.description && errors.description.message}
+                            </small>
                         </div>
 
                         <div className="col-span-full">

@@ -1,10 +1,11 @@
 
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 const TOKEN_KEY = 'access_token';
 
 export const getToken = (): string | null => {
   if (typeof window !== 'undefined') {
-    return localStorage.getItem(TOKEN_KEY);
+    const strg = localStorage.getItem(TOKEN_KEY);
+    return strg || null;
   }
   return null;
 };
@@ -18,7 +19,13 @@ export const removeToken = (): void => {
 };
 
 
-export const decodeToken = () => {
-  const decoded = jwt.decode(getToken());
-  return decoded;
-}
+export const decodeToken = (): JwtPayload | null => {
+  const code = getToken();
+
+  if (code) {
+    const decoded = jwt.decode(code) as JwtPayload;
+    return decoded;
+  }
+
+  return null;
+};
