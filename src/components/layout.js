@@ -120,7 +120,7 @@ export default function Layout({children}) {
                       <Link href="/dashboard">
                       <img
                         className="h-8 w-auto cursor-pointer"
-                        src="/logo.png"
+                        src="/app/logo.png"
                         alt="One Admin"
                       />
                       </Link>
@@ -164,7 +164,7 @@ export default function Layout({children}) {
               <Link href={"/dashboard"}>
               <img
                 className="h-8 w-auto cursor-pointer"
-                src="/logo.png"
+                src="/app/logo.png"
                 alt="One Admin"
               />
               </Link>

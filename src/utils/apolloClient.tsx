@@ -3,8 +3,9 @@ import { setContext } from '@apollo/client/link/context';
 import {getToken} from './TokenStorage'
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
+
 const uploadLink = createUploadLink({
-  uri: 'http://localhost:3000/graphql',
+  uri: process.env.NEXT_PUBLIC_BACKEND_URI,
   headers: {
     "Apollo-Require-Preflight": "true",
   },
