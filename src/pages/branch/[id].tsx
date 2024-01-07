@@ -99,9 +99,9 @@ export default function Branch(){
       };
     
     if(successMessage !== ""){
-    return <div className='h-[calc(100vh-64px)]'>
-        <SuccessAnimation message={successMessage}/>
-    </div> 
+        return <div className='h-[calc(100vh-64px)]'>
+            <SuccessAnimation message={successMessage}/>
+        </div> 
     }
     return(
         <div className='px-8 py-4'>

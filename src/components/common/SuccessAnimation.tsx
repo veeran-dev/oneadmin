@@ -28,7 +28,8 @@ const SuccessAnimation = ({message, link1, link2}:SuccessAnimationData) => {
   console.log({message, link1, link2})
 
   const getAnimation=()=>{
-    if (typeof document !== 'undefined') {
+    
+    if (typeof navigator !== "undefined" && typeof document !== 'undefined') {
       return <Lottie animationData={successAnimation} style={style}/>
     }
     else null

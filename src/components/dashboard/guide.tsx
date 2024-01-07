@@ -55,7 +55,7 @@ export default function Guide(){
         if (step < steps) {
           return <BsFillCheckCircleFill className="text-green-500 mr-2 text-lg" />;
         } else {
-            if (typeof document !== 'undefined') {
+            if (typeof navigator !== "undefined" && typeof document !== 'undefined') {
                 return <div className='mr-2'> <Lottie animationData={RightArrow} style={arrowStyle} /> </div>
             }
             return <div className='mr-2'>{"Loading..."} </div>
