@@ -27,9 +27,16 @@ const SuccessAnimation = ({message, link1, link2}:SuccessAnimationData) => {
 
   console.log({message, link1, link2})
 
+  const getAnimation=()=>{
+    if (typeof document !== 'undefined') {
+      return <Lottie animationData={successAnimation} style={style}/>
+    }
+    else null
+  }
+
   return(
         <div className='flex flex-col absolute inset-0 flex items-center justify-center bg-gray-50 bg-opacity-80'> 
-            <Lottie animationData={successAnimation} style={style}/>
+            {getAnimation()}
             <p>{message}</p>
             
               <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
