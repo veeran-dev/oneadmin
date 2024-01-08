@@ -68,7 +68,7 @@ export default function Guide(){
                 <h1 className="font-bold mb-4 text-center">Complete your setup</h1>
                 <div className='flex justify-center'>
                     <Image
-                        src="/app/lighthouse.png"
+                        src="/lighthouse.png"
                         alt="guide"
                         width={64}
                         height={64}

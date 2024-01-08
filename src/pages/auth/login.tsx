@@ -39,7 +39,7 @@ export default function Login() {
                 layout='fill'
                 objectFit='contain'
                 priority 
-                src={"/app/attendance.svg"} alt="Sign in with Google" />
+                src={"/attendance.svg"} alt="Sign in with Google" />
             
           </div>
           <div className="flex flex-1 flex-col items-center justify-center sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -47,7 +47,7 @@ export default function Login() {
               <div className="flex flex-col justify-center items-center">
                 <img
                   className="h-10 w-auto"
-                  src="/app/logo.png"
+                  src="/logo.png"
                   alt="Your Company"
                 />
                 <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
