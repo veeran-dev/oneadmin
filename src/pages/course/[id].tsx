@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SuccessAnimation from '@/components/common/SuccessAnimation';
 import Header from '@/components/common/header';
 import {useCreateCourse, useEditCourse, useGetCourse} from '@/hooks/courseHook';
-import courseCategories from './courseCategory';
+// import courseCategories from './courseCategory';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 
@@ -366,3 +366,47 @@ export default function Course() {
     </div>
   )
 }
+
+
+const courseCategories = [
+    'Dance',
+    'Music',
+    'Chess',
+    'Karate',
+    'Art',
+    'Cooking',
+    'Yoga',
+    'Programming',
+    'Photography',
+    'Languages',
+    'Mathematics',
+    'Science',
+    'Writing',
+    'Gardening',
+    'Fitness',
+    'Meditation',
+    'History',
+    'Literature',
+    'Design',
+    'Finance',
+    'Business',
+    'Technology',
+    'Crafts',
+    'Robotics',
+    'Theater',
+    'Sports',
+    'Astrology',
+    'Psychology',
+    'Environmental Studies',
+    'Philosophy',
+    'DIY Projects',
+    'Culinary Arts',
+    'Fashion Design',
+    'Graphic Design',
+    'Marketing',
+    'Animation',
+    'Film Production',
+    'Architecture',
+  ];
+
+  
