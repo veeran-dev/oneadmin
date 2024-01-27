@@ -1,12 +1,19 @@
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link';
 import { useEffect } from 'react'
 
-export default function Alert({message, type}:{message:string, type:string}) {
+interface AlertProps {
+  message: string;
+  type: 'alert' | 'success' | 'danger';
+  link?: string;
+}
+
+export default function Alert({message, type, link}:AlertProps) {
 
     const getBgColor =()=>{
         if(type === 'alert'){
-            return 'bg-yellow-50'
+            return 'bg-red-100'
         }
         if(type === 'success'){
             return 'bg-green-50'
@@ -39,17 +46,20 @@ export default function Alert({message, type}:{message:string, type:string}) {
         <div className="ml-3">
           <p className={getTextColor()+" text-sm font-medium "}>{message}</p>
         </div>
+        {link && 
         <div className="ml-auto pl-3">
           <div className="-mx-1.5 -my-1.5">
-            <button
+            <Link
+              href={link}
               type="button"
-              className="inline-flex rounded-md bg-gray-50 p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
+              className="inline-flex items-center rounded-md bg-gray-50 py-1.5 px-3 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
             >
-              <span className="sr-only">Dismiss</span>
-              <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-            </button>
+              <span className='text-sm mr-2'>Details </span>
+              <span aria-hidden="true">  &rarr;</span>
+            </Link>
           </div>
         </div>
+        }
       </div>
     </div>
   )

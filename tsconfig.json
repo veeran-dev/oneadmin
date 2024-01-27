@@ -17,6 +17,8 @@
       "*": ["./src/*", "./src/utils/*"],
       "@/*": ["./src/*"],
       "@component/*": ["./src/components/*"],
+      "@common/*": ["./src/components/common/*"],
+      "@utils/*": ["./src/utils/*"],
       "@context/*":["./src/context/*"],
       "@api/*":["./src/pages/api/mutation/*"],
       "@hooks/*":["./src/hooks/*"],

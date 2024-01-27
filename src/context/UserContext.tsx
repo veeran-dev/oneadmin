@@ -16,6 +16,7 @@ type User = {
 type UserContextType = {
   user: User | null;
   updateUser: (user: User) => void;
+  newUser: boolean;
 };
 
 const defaultUser ={
@@ -30,6 +31,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser)
+  const [newUser, setNewUser] = useState<boolean>(false)
   const { loading, error, data } = useQuery(GET_USER_BY_EMAIL);
   const router = useRouter()
   
@@ -41,11 +43,26 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   },[data])
 
   useEffect(()=>{
-    const invalidUser = 'User is not available';
-    if (error?.message === invalidUser) {
-      router.push('/settings/new?force=true');
-    } else if (error) {
-      if(!router.query?.referalCode){
+
+    if (router.pathname === '/auth/login' || error?.message === undefined) {
+      return
+    }
+    
+    console.log(error)
+    if(error){
+      const invalidUser = 'User is not available';
+      if (error?.message === invalidUser) {
+        console.log("Invalid User")
+        setNewUser(true)
+        // router.push('/settings/new?force=true');
+      }
+      else if(router.query?.referalCode){
+        return
+      } 
+      else{
+        if(router.query?.referalCode){
+          return
+        }
         router.push('/auth/login');
       }
     }
@@ -61,6 +78,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const contextValue: UserContextType = {
     user,
     updateUser,
+    newUser
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

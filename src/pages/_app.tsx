@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { getToken } from '@/utils/TokenStorage';
 import { useRouter } from 'next/router';
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import React from 'react';
 
 
 loadDevMessages();
@@ -29,7 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <ApolloProvider client={apolloClient}>
         <UserProvider>
           <Layout>
-              <Component {...pageProps} />
+              {/* <React.StrictMode> */}
+                <Component {...pageProps} />
+              {/* </React.StrictMode> */}
           </Layout>
         </UserProvider>
       </ApolloProvider>

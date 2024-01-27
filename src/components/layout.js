@@ -1,34 +1,26 @@
 import { Fragment, Suspense, useEffect, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
   BellIcon,
   CalendarIcon,
-  ChartPieIcon,
-  Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
   HomeIcon,
   UsersIcon,
   XMarkIcon,
   ArrowLeftOnRectangleIcon,
   CurrencyRupeeIcon,
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { googleLogout } from '@react-oauth/google'
 import { getToken, removeToken } from '@/utils/TokenStorage'
-import { useUser} from '@context/UserContext'
 import Link from 'next/link'
 import { Cog8ToothIcon } from '@heroicons/react/24/outline'
+import Loader from '@common/loading'
+import Alert from '@common/alert'
+import { useUser } from 'context/UserContext'
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Attendance', href: '/attendance', icon: UsersIcon, current: false },
-  { name: 'Students', href: '/students', icon: CalendarIcon, current: false },
-  { name: 'Payment', href: '/payments', icon: CurrencyRupeeIcon, current: false },
-  {name: 'Settings', href:'/settings', icon: Cog8ToothIcon, current: false }
-]
+
 
 const userNavigation = [
   { name: 'Settings', href: '/settings' },
@@ -43,17 +35,31 @@ export default function Layout({children}) {
   const router = useRouter()
   const routesWithoutLayout = ['auth/login', 'auth/signup'];
   const isRouteWithoutLayout = routesWithoutLayout.includes(router.pathname.replace(/^\//, ''));
-
+  const [showAlert, setShowAlert] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { user } = useUser();
+  const {user, newUser} = useUser()
 
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: router.pathname.includes('/dashboard') },
+    { name: 'Attendance', href: '/attendance', icon: UsersIcon, current: router.pathname.includes('/attendance') },
+    { name: 'Students', href: '/students', icon: CalendarIcon, current: router.pathname.includes('/students') },
+    { name: 'Payment', href: '/payments', icon: CurrencyRupeeIcon, current: router.pathname.includes('/payments') },
+    { name: 'Settings', href: '/settings', icon: Cog8ToothIcon, current: router.pathname.includes('/settings') },
+  ]
+
+  console.log("newUser.....",newUser)
   useEffect(()=>{
-    if(getToken() === "" || getToken()===undefined){
-      router.push("/auth/login")
+    if(!router.pathname.includes('/settings/[id]') && newUser){
+      setShowAlert(true)
     }
-  },[])
+    else{
+      setShowAlert(false)
+    }
+  },[router, newUser])
 
-  if(isRouteWithoutLayout){
+  
+
+  if(isRouteWithoutLayout === true){
     return <>{children}</>
   }
 
@@ -292,7 +298,8 @@ export default function Layout({children}) {
           </div>
 
           <main className="bg-[#f3f3f3] relative h-full min-h-screen">
-            <Suspense fallback={"loading........"}>
+            <Suspense fallback={Loader}>
+              {showAlert && <Alert message="Click the details button to fill your Institute Details to start " type="alert" link="/settings/new?force=true"/>}
               {children}
             </Suspense>
           </main>
