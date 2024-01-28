@@ -64,7 +64,7 @@ export default function Guide() {
       <div className="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 p-6 pb-0">
         <h1 className="font-bold mb-4 text-center">Complete your setup</h1>
         <div className="flex justify-center">
-          <DonutChart percentage={1 * 20} />
+          <DonutChart percentage={steps > 0 ? Math.round(steps * 16.6) : 0} />
         </div>
         <p className="text-sm text-center text-gray-500 my-4">
           Complete all 5 steps to start

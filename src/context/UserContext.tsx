@@ -40,7 +40,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUserData(data['getUserByEmail'])
       setUser(data['getUserByEmail'])
     }
-  },[data])
+    else{
+      setUserData(null),
+      setUser(defaultUser)
+    }
+  },[loading, error, data, router])
 
   useEffect(()=>{
 

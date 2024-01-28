@@ -2,6 +2,7 @@ import BranchList from "@/components/branchList";
 import Empty from "@/components/common/empty";
 import Header from "@/components/common/header";
 import { useBranchesByInstituteId } from "@/hooks/branchHook";
+import { tabsData } from "utils/tabData";
 
 export default function Branch(){
 
@@ -10,6 +11,7 @@ export default function Branch(){
     const configs ={
         options: false,
         tabs: true,
+        tabsData: tabsData,
         link:{
           href: "/branch/new",
           title: "Add Branch"

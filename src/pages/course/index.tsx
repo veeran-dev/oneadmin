@@ -3,6 +3,7 @@ import CourseList from "@/components/CourseList";
 import Empty from "@/components/common/empty";
 import Header from "@/components/common/header";
 import { useGetCoursesByInstituteId } from "@/hooks/courseHook";
+import { tabsData } from "utils/tabData";
 
 export default function Course(){
 
@@ -11,6 +12,7 @@ export default function Course(){
     const configs ={
         options: false,
         tabs: true,
+        tabsData: tabsData,
         link:{
           href: "/course/new",
           title: "Add Course"

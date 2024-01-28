@@ -12,7 +12,8 @@ interface DonutChartProps {
     percentage: number;
 }
 
-const DonutChart: React.FC<DonutChartProps> = ({ percentage=0 }) => {
+const DonutChart: React.FC<DonutChartProps> = React.memo(({ percentage }) => {
+    console.log("percentage in donutChart...",percentage)
     const data = {
         datasets: [
             {
@@ -36,7 +37,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ percentage=0 }) => {
             ctx.font = fontSize + "em sans-serif";
             ctx.textBaseline = "middle";
 
-            var text = percentage + "%",
+            var text = chart.config.data.datasets[0].data[0] + "%",
                 textX = Math.round((width - ctx.measureText(text).width) / 2),
                 textY = height / 2;
 
@@ -56,6 +57,6 @@ const DonutChart: React.FC<DonutChartProps> = ({ percentage=0 }) => {
     };
 
     return <Doughnut data={data} options={options} plugins={plugins}/>;
-};
+});
 
 export default DonutChart;

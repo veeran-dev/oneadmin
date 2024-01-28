@@ -6,7 +6,7 @@ import { useUser } from '@/context/UserContext';
 const useInvitations = () => {
   const [sendInviteMutation] = useMutation(SEND_INVITE);
   const {user} = useUser();
-  
+  console.log("user in useInvitations...",user)
   const sendInvite = async (email: string) => {
     try {
       const instituteId = user?.instituteId;

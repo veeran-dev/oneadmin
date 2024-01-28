@@ -3,6 +3,7 @@ import Empty from "@/components/common/empty";
 import Header from "@/components/common/header";
 import ReusableTable from "@/components/reusableTable";
 import { useUsers } from "@/hooks/getUserHook";
+import { tabsData } from "utils/tabData";
 // import { useStaffesByInstituteId } from "@/hooks/staffHook";
 
 export default function Staff(){
@@ -13,6 +14,7 @@ export default function Staff(){
     const configs ={
         options: false,
         tabs: true,
+        tabsData: tabsData,
         link:{
           href: "/staff/invite",
           title: "Invite Staff"

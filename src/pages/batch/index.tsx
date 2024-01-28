@@ -1,5 +1,5 @@
 // import BatchList from "@/components/batchList";
-import Empty from "@/components/common/empty";
+// import Empty from "@/components/common/empty";
 import EmptyTable from "@/components/common/emptyTable";
 import Header from "@/components/common/header";
 import Loader from "@/components/common/loading";
@@ -7,15 +7,15 @@ import Search from "@/components/common/search";
 import ReusableTable from "@/components/reusableTable";
 import { useUser } from "@/context/UserContext";
 import { useBatchesByInstituteId } from "@/hooks/batchHook";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { pagination } from '../../types/common'
 import Pagination from "@/components/common/pagination";
+import { tabsData } from "utils/tabData";
 
 const defaultPagination = {
   limit: 10,
   offset: 0
 }
-
 
 export default function Batch(){
     
@@ -27,6 +27,7 @@ export default function Batch(){
     const configs ={
         options: false,
         tabs: true,
+        tabsData: tabsData,
         link:{
           href: "/batch/new",
           title: "Add Batch"
