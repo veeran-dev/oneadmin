@@ -25,8 +25,6 @@ const SuccessAnimation = ({message, link1, link2}:SuccessAnimationData) => {
     width:200
   };
 
-  console.log({message, link1, link2})
-
   const getAnimation=()=>{
     
     if (typeof navigator !== "undefined" && typeof document !== 'undefined') {

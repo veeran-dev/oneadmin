@@ -1,4 +1,4 @@
-import { Fragment, Suspense, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -37,7 +37,7 @@ export default function Layout({children}) {
   const isRouteWithoutLayout = routesWithoutLayout.includes(router.pathname.replace(/^\//, ''));
   const [showAlert, setShowAlert] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const {user, newUser} = useUser()
+  const {logoutUser, newUser} = useUser()
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: router.pathname.includes('/dashboard') },
@@ -47,8 +47,14 @@ export default function Layout({children}) {
     { name: 'Settings', href: '/settings', icon: Cog8ToothIcon, current: router.pathname.includes('/settings') },
   ]
 
-  console.log("newUser.....",newUser)
+
   useEffect(()=>{
+    //find user is logged in or not
+    const token = getToken()
+    if(token && newUser && !router.pathname.includes('/settings/[id]')){
+      location.href = '/settings/new'
+    }
+
     if(!router.pathname.includes('/settings/[id]') && newUser){
       setShowAlert(true)
     }
@@ -70,8 +76,7 @@ export default function Layout({children}) {
       return
     }
     googleLogout()
-    removeToken()
-    router.push("/auth/login")
+    logoutUser()
   }
   
 
@@ -298,10 +303,8 @@ export default function Layout({children}) {
           </div>
 
           <main className="bg-[#f3f3f3] relative h-full min-h-screen">
-            <Suspense fallback={Loader}>
               {showAlert && <Alert message="Click the details button to fill your Institute Details to start " type="alert" link="/settings/new?force=true"/>}
               {children}
-            </Suspense>
           </main>
         </div>
       </div>

@@ -27,7 +27,7 @@ export default function Settings() {
   // const [editInstituteMutation, { loading:editLoading, error:editError }] = useMutation(EDIT_INSTITUTE);
   const [editInstituteMutation] = useMutation(EDIT_INSTITUTE, {
     onCompleted: (data) => {
-      console.log("Edit Institute Successful:", data);
+      
       setSuccess(true);
       setSuccessMessage("Your account updated successfully");
       setTimeout(() => {
@@ -47,7 +47,7 @@ export default function Settings() {
   const { data } = useQuery(GET_INSTITUTE_BY_ID, {
     variables: { id: user?.instituteId },
     onCompleted: (data) => {
-      console.log("Query Completed:", data);
+      
       const { getInstitute } = data;
       setValue("name", getInstitute.name);
       setValue("streetAddress", getInstitute.streetAddress);
@@ -94,17 +94,15 @@ export default function Settings() {
   //if already a user redirects
   const handleRegistration = async (formData: any) => {
     try {
-      console.log("formData....", formData);
+      
       formData["pocMobile"] = "+91" + formData.pocMobile;
       if (id === "new") {
         const { data } = await registerInstituteMutation({
           variables: { instituteData: formData },
         });
-        console.log("response is....", data);
-        console.log("loading...", loading);
-        console.log("error...", error);
+        
         if (data && force === "true") {
-          console.log("----->>>>>", data.createInstitute?._id);
+          
           await refetchUserQuery(
             data.createInstitute?._id,
             formData["pocMobile"]
@@ -178,7 +176,7 @@ export default function Settings() {
     pocMobile: {
       required: "Mobile number is required",
       pattern: {
-        value: /^[0-9]{10}$/,
+        value: /^[6-9]\d{9}$/,
         message: "Invalid mobile number",
       },
     },

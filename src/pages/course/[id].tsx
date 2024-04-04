@@ -244,7 +244,7 @@ export default function Course() {
 
                         <div className="col-span-full">
                             <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-                                Cover photo <span className='text-red-600'>*</span>
+                                Cover photo
                             </label>
                             <small className="text-red-700">
                                 {errors?.image && errors.image.message}
@@ -262,7 +262,7 @@ export default function Course() {
                                         id="file-upload" 
                                         type="file" 
                                         className="sr-only"
-                                        {...register('image', validateOptions(0).image) }
+                                        {...register('image') }
                                     />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
@@ -301,7 +301,8 @@ export default function Course() {
                             {fields.map((field:any, index:any) => (
                                 <div key={"field"+{index}} className=' mb-2 bg-gray-50 px-4 py-2 rounded-lg'>
                                     <div className='flex justify-end '>
-                                            <button type="button" className='w-[24px] h-[24px] rounded-lg text-gray-500 hover:text-gray-300' onClick={() => remove(index)}>
+
+                                            <button type="button" className='w-[24px] h-[24px] rounded-lg text-gray-500 hover:text-gray-300' onClick={() => fields.length > 1 && remove(index)}>
                                                 <MinusCircleIcon className='text-md' />
                                             </button>
                                             <button type="button" className='w-[24px] h-[24px] rounded-lg text-gray-500 hover:text-gray-300' onClick={() => append(index)}>

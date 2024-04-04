@@ -12,8 +12,8 @@ import { ToastContainer, toast } from "react-toastify";
 import * as yup from 'yup';
 
 const defaultPagination:pagination={
-    limit: undefined,
-    offset: undefined
+    limit: 100,
+    offset: 0
 }
 
 export default function JoinStudent(){

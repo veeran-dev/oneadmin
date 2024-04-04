@@ -38,8 +38,6 @@ export default function Card({students, batch}:any) {
             removedItem['present'] = false;
         }
         
-        console.log("newSet............",newSet)
-        console.log("removedItem..............",removedItem)
         setTimeout(() => {
             newSet.push(removedItem);
             setPeople([...newSet]);
@@ -47,20 +45,16 @@ export default function Card({students, batch}:any) {
           }, 400);
       };
 
-console.log("person is.....",people)
-
     const getPresent=(b: boolean)=>{
         if(!people){
             return 0;
         }
         const x = people.filter((item: { present: boolean; }) => item.present === b)
-        console.log("people.....",x)
         return x.length
 
     }
 
     const saveAttendance = async()=>{
-        console.log("saveAttendance")
         let present = getPresent(true)
         let absent = getPresent(false)
         if((present+absent) !== people.length){
@@ -82,7 +76,6 @@ console.log("person is.....",people)
             'students': attendance
 
         }
-        console.log(attendance)
         const res = await addAttendance({
             variables:{
                 attendanceData

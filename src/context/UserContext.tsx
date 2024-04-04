@@ -3,6 +3,7 @@ import { setUserData } from '@/utils/userStorage';
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useReducer, ReactNode, useState, useEffect, useMemo } from 'react';
+import { getToken, removeToken } from 'utils/TokenStorage';
 
 // Define the types
 type User = {
@@ -15,7 +16,7 @@ type User = {
 
 type UserContextType = {
   user: User | null;
-  updateUser: (user: User) => void;
+  logoutUser: () => void;
   newUser: boolean;
 };
 
@@ -32,19 +33,38 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser)
   const [newUser, setNewUser] = useState<boolean>(false)
-  const { loading, error, data } = useQuery(GET_USER_BY_EMAIL);
+  console.log("auth token is....",getToken()?.slice(0,10))
+  const { loading, error, data, refetch } = useQuery(GET_USER_BY_EMAIL,{
+    fetchPolicy: 'network-only',
+    context: {
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
+    },
+  });
+  console.log("data:",data, "loading:",loading, "error:",error);
   const router = useRouter()
   
+
   useEffect(()=>{
+    if(!loading){
+      refetch()
+    }
+    
+  },[router])
+
+  useEffect(()=>{
+    
     if(data && data.getUserByEmail){
       setUserData(data['getUserByEmail'])
       setUser(data['getUserByEmail'])
+      setNewUser(false)
     }
     else{
-      setUserData(null),
+      setUserData(defaultUser),
       setUser(defaultUser)
     }
-  },[loading, error, data, router])
+  },[loading, error, data, router.pathname, router.query])
 
   useEffect(()=>{
 
@@ -52,13 +72,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return
     }
     
-    console.log(error)
     if(error){
       const invalidUser = 'User is not available';
       if (error?.message === invalidUser) {
-        console.log("Invalid User")
         setNewUser(true)
-        // router.push('/settings/new?force=true');
       }
       else if(router.query?.referalCode){
         return
@@ -67,7 +84,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if(router.query?.referalCode){
           return
         }
-        router.push('/auth/login');
+        // router.push('/auth/login');
       }
     }
       
@@ -75,13 +92,15 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 
 
-  const updateUser = (user: User) => {
-    setUser(user)
+  const logoutUser = () => {
+    setUser(defaultUser)
+    removeToken()
+    router.push("/auth/login")
   };
 
   const contextValue: UserContextType = {
     user,
-    updateUser,
+    logoutUser,
     newUser
   };
 

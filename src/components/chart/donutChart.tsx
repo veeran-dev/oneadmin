@@ -13,7 +13,6 @@ interface DonutChartProps {
 }
 
 const DonutChart: React.FC<DonutChartProps> = React.memo(({ percentage }) => {
-    console.log("percentage in donutChart...",percentage)
     const data = {
         datasets: [
             {
@@ -58,5 +57,5 @@ const DonutChart: React.FC<DonutChartProps> = React.memo(({ percentage }) => {
 
     return <Doughnut data={data} options={options} plugins={plugins}/>;
 });
-
+DonutChart.displayName = 'DonutChart';
 export default DonutChart;

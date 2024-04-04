@@ -207,7 +207,7 @@ export default function BatchForm({batch, courses, branches, staffs}:any){
                                         {errors?.staffIds && errors.staffIds.message}
                                     </small>
                                     <small className="text-blue-700 cursor-pointer ml-auto">
-                                        <Link href="/staff/new">Create New</Link>
+                                        <Link href="/staff/invite">Create New</Link>
                                     </small>
                                 </div>
                             </div>

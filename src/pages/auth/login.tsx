@@ -21,8 +21,8 @@ export default function Login() {
         }
         await createStaffs(user)
       }
-
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
+      // router.push('/dashboard');
     }
 
     const errorMessage =()=>{

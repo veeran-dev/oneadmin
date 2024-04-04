@@ -90,7 +90,7 @@ export default function Student(){
             <Header title={"Student"} config={configs}/>
             <Search performSearch={performSearch}/>
             {students && students.length === 0 &&
-                <EmptyTable headers={headers} title={"No Student"} link={"/student/new"}/>
+                <EmptyTable headers={headers} title={"No Student"} link={"/students/new"}/>
             }
             {studentsLoading &&
                 <Loader />

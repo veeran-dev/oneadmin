@@ -21,13 +21,14 @@ export default function Branch(){
     const { createBranch, data, loading, error } = useCreateBranch();
     const { editBranch, editData, editLoading, editError } = useEditBranch()
     const { loading:getLoading, error:getError, branch } =  useBranchesById();
-    const { register, handleSubmit, setError, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         mode: "onBlur",
     });
     const {user} = useUser();
 
     useEffect(()=>{
-        if(branch){
+        console.log("branch....",branch)
+        if(branch && branch.length > 0){
             setValue("name", branch.name)
             setValue("pocName", branch.pocName)
             setValue("pocMobile", branch.pocMobile?.replace(/^\+91\s*/, ''))
@@ -81,7 +82,7 @@ export default function Branch(){
         pocMobile: {
             required: "Mobile number is required",
             pattern: {
-              value: /^[0-9]{10}$/,
+                value: /^[6-9]\d{9}$/,
               message: "Invalid mobile number",
             },
         },

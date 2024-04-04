@@ -7,15 +7,12 @@ import {
 import Link from "next/link";
 import { useCommonData } from "@/hooks/commonDataHook";
 import Loader from "../common/loading";
-import { useUser } from "context/UserContext";
 import DonutChart from "components/chart/donutChart";
 
 export default function Guide() {
   const [steps, setSteps] = useState(0);
-  const { data, loading } = useCommonData();
-  const { user } = useUser();
+  const { data, loading, error } = useCommonData();
 
-  console.log("Guide..........", data);
   const todo = [
     {
         title: "Add your Institute",
@@ -73,7 +70,7 @@ export default function Guide() {
 
       <div className="p-6 pt-0">
         {loading && <Loader />}
-        {todo.map((item, index) => (
+        {!loading && todo.map((item, index) => (
           <div key={index} className="flex items-start gap-4 p-3">
             <div className="flex flex-row items-center  rounded-md cursor-pointer">
               {verifyCurrentStep(index)}

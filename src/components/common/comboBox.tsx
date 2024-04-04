@@ -1,5 +1,5 @@
 
-import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useState } from 'react'
+import { Key, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 
@@ -24,7 +24,6 @@ export default function ComboBox({placeholder,data, onSelect}:any) {
         })
 
   const handleChange =(item:any) =>{
-    console.log("handleChange..........",item)
     setSelectedPerson(item)
     onSelect(item._id)
   }

@@ -30,7 +30,8 @@ const useCreateBatch = () => {
 const useBatchesByInstituteId = (pagination:pagination, batchName:string="") => {
     // const {user} = useUser()
     const { limit, offset} = pagination
-    const user:any = getUserData();
+    const {user} = useUser();
+    console.log("user....",user?.instituteId)
     const { loading, error, data } = useQuery(GET_BATCHES_BY_INSTITUTE_AND_NAME, {
         variables: {
             query: {

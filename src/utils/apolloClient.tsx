@@ -17,13 +17,19 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
+      'Cache-Control': 'no-cache',
     }
   }
 });
 
 const client = new ApolloClient({
   link: concat(authLink, uploadLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'no-cache',
+    },
+  },
 });
 
 

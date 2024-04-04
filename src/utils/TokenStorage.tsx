@@ -1,21 +1,17 @@
-
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import Cookies from 'js-cookie';
 const TOKEN_KEY = 'access_token';
 
 export const getToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    const strg = localStorage.getItem(TOKEN_KEY);
-    return strg || null;
-  }
-  return null;
+  return Cookies.get(TOKEN_KEY) ?? '';
 };
 
 export const setToken = (token: any): void => {
-  localStorage.setItem(TOKEN_KEY, token);
+  Cookies.set(TOKEN_KEY, token, { expires: 7 })
 };
 
 export const removeToken = (): void => {
-  localStorage.removeItem(TOKEN_KEY);
+  Cookies.remove(TOKEN_KEY)
 };
 
 
