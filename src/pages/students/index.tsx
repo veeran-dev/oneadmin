@@ -8,6 +8,7 @@ import { useStudentAPI} from "@/hooks/studentHook";
 import { useEffect, useState } from "react";
 import { pagination as PageType } from '../../types/common'
 import Pagination from "@/components/common/pagination";
+import { useRouter } from "next/router";
 
 export default function Student(){
 
@@ -40,12 +41,10 @@ export default function Student(){
     const [studentName, setStudentName] = useState<string>("")
     const [pagination, setPagination] = useState<PageType>(defaultPagination)
     const [formattedStudent, setFormattedStudent] = useState()
-    const {students, studentsLoading} = useStudentAPI(pagination, studentName)
-    console.log("stiudent....",students)
-
+    const {students, studentsLoading, refetchStudents} = useStudentAPI(pagination, studentName)
+    
+    const router = useRouter()
     const performSearch = (term:string) =>{
-        console.log("-------------------------Perform Search-------------------------")
-        console.log(term)
         setStudentName(term)
     }
 
@@ -68,7 +67,6 @@ export default function Student(){
                 limit: lim
             })
         }
-        console.log("pagination.....",pagination)
     }
 
     useEffect(()=>{
@@ -83,6 +81,12 @@ export default function Student(){
         }
 
     },[students])
+
+    useEffect(()=>{
+        console.log("students....",students)
+        refetchStudents()
+    }
+    ,[router.query])
 
 
     return(

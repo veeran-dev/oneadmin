@@ -2,6 +2,7 @@ import { CREATE_COURSE, GET_COURSE, GET_COURSES_BY_INSTITUTE_ID, EDIT_COURSE } f
 import { useMutation, useQuery } from '@apollo/client';
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/router';
+import { use, useEffect } from 'react';
 
 interface CourseInput {
     instituteId: string;
@@ -121,10 +122,16 @@ const useGetCourse = () => {
 
 
 const useGetCoursesByInstituteId = (name="") => {
+  const router = useRouter();
   const instituteId = useUser()?.user?.instituteId;
-  const { loading, error, data } = useQuery(GET_COURSES_BY_INSTITUTE_ID, {
+  const { loading, error, data,refetch } = useQuery(GET_COURSES_BY_INSTITUTE_ID, {
     variables: { query: { instituteId,name:name } },
   });
+
+  useEffect(() => {
+    refetch();
+  },[router.pathname])
+  
 
   return {
     loading,

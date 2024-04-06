@@ -37,7 +37,7 @@ export default function Layout({children}) {
   const isRouteWithoutLayout = routesWithoutLayout.includes(router.pathname.replace(/^\//, ''));
   const [showAlert, setShowAlert] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const {logoutUser, newUser} = useUser()
+  const {logoutUser, newUser, loading} = useUser()
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: router.pathname.includes('/dashboard') },
@@ -78,7 +78,7 @@ export default function Layout({children}) {
     googleLogout()
     logoutUser()
   }
-  
+  console.log('top loading', loading)
 
   return (
     <>
@@ -304,7 +304,7 @@ export default function Layout({children}) {
 
           <main className="bg-[#f3f3f3] relative h-full min-h-screen">
               {showAlert && <Alert message="Click the details button to fill your Institute Details to start " type="alert" link="/settings/new?force=true"/>}
-              {children}
+              {!loading && children}
           </main>
         </div>
       </div>

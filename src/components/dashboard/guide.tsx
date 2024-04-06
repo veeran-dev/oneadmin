@@ -42,7 +42,7 @@ export default function Guide() {
 
   useEffect(() => {
     if (data) {
-      setSteps(data.steps);
+      setSteps(data.steps+1);
     }
   }, [data]);
 

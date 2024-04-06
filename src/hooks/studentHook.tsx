@@ -24,7 +24,7 @@ export const useStudentAPI = (pagination?:pagination, name?:string) => {
         }
     });
     
-    const { data: students, loading:studentsLoading} = useQuery(GET_STUDENTS_BY_INSTITUTE_ID, {
+    const { data: students, loading:studentsLoading, refetch:refetchStudents} = useQuery(GET_STUDENTS_BY_INSTITUTE_ID, {
         variables: {
             instituteId: user?.instituteId,
             name: name,
@@ -53,6 +53,7 @@ export const useStudentAPI = (pagination?:pagination, name?:string) => {
       students: students?.getStudentsByInstituteId,
       studentsLoading,
       studentLoading,
+      refetchStudents,
     };
   };
 

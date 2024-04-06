@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 
-export default function Empty({title, link}:{title:string, link:string}){
+export default function Empty({title, link}:{title:string, link:string|undefined}){
   const router = useRouter()
 
   return (
@@ -23,7 +23,7 @@ export default function Empty({title, link}:{title:string, link:string}){
       </svg>
       <h3 className="mt-2 text-sm font-semibold text-gray-900">{title}</h3>
       <p className="mt-1 text-sm text-gray-500">Get started by creating a new new record or entry.</p>
-      {link &&
+      {link !== undefined &&
       <div className="mt-6">
         <button
           onClick={()=>{router.push(link)}}

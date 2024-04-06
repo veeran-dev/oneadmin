@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
+import { getLink } from "utils/utils";
 import * as yup from 'yup';
 
 const defaultPagination:pagination={
@@ -55,7 +56,7 @@ export default function JoinStudent(){
             if(student){
                 setSuccessMessage("student added to batch successfully")
                 setTimeout(()=>{
-                router.push('/students')
+                router.push(getLink('/students'));
                 },2000)
             }
         } catch (error:any) {

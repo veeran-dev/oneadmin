@@ -74,7 +74,7 @@ export default function Index(){
                 </Link>
             </div>
             {history && history.length === 0 &&
-                <EmptyTable headers={headers} title={"No Payment"} link={"/payments/new"}/>
+                <EmptyTable headers={headers} title={"No Payment"} link={undefined}/>
             }
             {getLoading && 
               <Loader/>

@@ -110,7 +110,7 @@ export default function Student(){
                 if(editedStudent){
                     setSuccessMessage("student is edited successfully")
                     setTimeout(()=>{
-                    router.push('/student')
+                    router.push(`/students?squery=${Math.random()}`)
                     },2000)
                 }
             }

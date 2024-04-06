@@ -5,7 +5,7 @@ import { pagination } from '@/types/common';
 import { getUserData } from '@/utils/userStorage';
 import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { off } from 'process';
+import { useEffect } from 'react';
 
 
 const useCreateBatch = () => {
@@ -28,11 +28,11 @@ const useCreateBatch = () => {
 };
 
 const useBatchesByInstituteId = (pagination:pagination, batchName:string="") => {
-    // const {user} = useUser()
+    const router = useRouter()
     const { limit, offset} = pagination
     const {user} = useUser();
     console.log("user....",user?.instituteId)
-    const { loading, error, data } = useQuery(GET_BATCHES_BY_INSTITUTE_AND_NAME, {
+    const { loading, error, data,refetch} = useQuery(GET_BATCHES_BY_INSTITUTE_AND_NAME, {
         variables: {
             query: {
                 instituteId: user?.instituteId,
@@ -44,6 +44,9 @@ const useBatchesByInstituteId = (pagination:pagination, batchName:string="") => 
             }
         },
     });
+    useEffect(() => {
+      refetch();
+    },[router.pathname])
     return { batchLoading:loading, error, batches: data?.getBatchesByInstituteAndBatchName || [] };
 };
 

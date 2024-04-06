@@ -11,6 +11,7 @@ type User = {
     name: string;
     email: string;
     instituteId: string;
+    loading: boolean;
 };
 
 
@@ -18,6 +19,7 @@ type UserContextType = {
   user: User | null;
   logoutUser: () => void;
   newUser: boolean;
+  loading: boolean;
 };
 
 const defaultUser ={
@@ -25,6 +27,7 @@ const defaultUser ={
     name: "",
     email:"",
     instituteId:"",
+    loading: true,
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -101,7 +104,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const contextValue: UserContextType = {
     user,
     logoutUser,
-    newUser
+    newUser,
+    loading
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

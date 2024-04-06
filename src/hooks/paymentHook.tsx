@@ -9,6 +9,7 @@ import { pagination } from "@/types/common";
 import { getUserData } from "@/utils/userStorage";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export interface addPaymentData {
   instituteId: string;
@@ -22,14 +23,19 @@ export interface addPaymentData {
 
 export const usePayment = (pagination: pagination, name: string) => {
   const user: any = getUserData();
-
-  const { data, loading, error } = useQuery(GET_PAYMENT_LIST, {
+  const router = useRouter();
+  const { data, loading, error,refetch } = useQuery(GET_PAYMENT_LIST, {
     variables: {
       instituteId: user?.instituteId,
       studentName: name,
       pagination: pagination,
     },
   });
+
+  useEffect(() => {
+    refetch();
+  },[router.pathname])
+
 
   return {
     data: data?.getPayments,

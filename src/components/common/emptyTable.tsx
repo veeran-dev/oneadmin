@@ -7,7 +7,7 @@ import { title } from "process";
 interface EmptyTableProps {
   headers: { label: string; key: string }[],
   title: string;
-  link: string;
+  link: string | undefined;
 }
 
 

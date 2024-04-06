@@ -4,6 +4,7 @@ import { CREATE_BRANCH, EDIT_BRANCH, GET_BRANCH_BY_ID, GET_BRANCHES_BY_INSTITUTE
 import { getUserData } from '@/utils/userStorage';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 const useCreateBranch = () => {
@@ -26,14 +27,18 @@ const useCreateBranch = () => {
 };
 
 const useBranchesByInstituteId = () => {
+  const router = useRouter()
   const userData = getUserData()
-  const { loading, error, data } = useQuery(GET_BRANCHES_BY_INSTITUTE_ID, {
+  const { loading, error, data,refetch } = useQuery(GET_BRANCHES_BY_INSTITUTE_ID, {
       variables: {
           query: {
               instituteId: userData?.instituteId,
           },
       },
   });
+  useEffect(() => {
+    refetch();
+  },[router.pathname])
 
   return { loading, error, branches: data?.getBranchesByInstituteId || [] };
 };
